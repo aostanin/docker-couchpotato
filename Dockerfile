@@ -1,13 +1,10 @@
-FROM ubuntu:trusty
+FROM alpine:3.2
 
-ENV LANG en_US.UTF-8
-RUN locale-gen $LANG
-
-RUN sed -i 's/restricted$/restricted multiverse/' /etc/apt/sources.list && \
-    apt-get update -q && \
-    apt-get install -qy git-core python2.7 unrar
-
-RUN git clone https://github.com/RuudBurger/CouchPotatoServer.git /couchpotato
+RUN apk --update add git python py-openssl unrar && \
+    apk add gcc libxml2-dev libxslt-dev musl-dev python-dev py-pip && \
+    pip install lxml && \
+    apk del gcc libxml2-dev libxslt-dev musl-dev python-dev py-pip && \
+    git clone --depth=1 https://github.com/RuudBurger/CouchPotatoServer.git /couchpotato
 
 ADD start.sh /start.sh
 
