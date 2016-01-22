@@ -1,9 +1,6 @@
-FROM alpine:3.2
+FROM alpine:3.3
 
-RUN apk --update add git python py-openssl unrar && \
-    apk add gcc libxml2-dev libxslt-dev musl-dev python-dev py-pip && \
-    pip install lxml && \
-    apk del gcc libxml2-dev libxslt-dev musl-dev python-dev py-pip && \
+RUN apk --update add git python py-lxml py-openssl unrar && \
     git clone --depth=1 https://github.com/RuudBurger/CouchPotatoServer.git /couchpotato
 
 ADD start.sh /start.sh
